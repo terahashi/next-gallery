@@ -24,7 +24,7 @@ const HeaderWrap = styled.header`
     flex-wrap: nowrap;
   }
   a {
-    font-size: 1.5rem;
+    font-size: 1.1rem;
   }
 `;
 
@@ -43,13 +43,13 @@ const Header = () => {
         <HeaderInner>
           <div className='logo'>
             <Link href='/'>
-              <h1 className='mb-0 font-bold'>Lib-Gallery</h1>
+              <h1 className='mb-0 font-bold'>GALLERY</h1>
             </Link>
           </div>
 
-          <div className='pc-menu gap-x-4'>
-            <Link href='/about'>About</Link>
-            <Link href='/gallery'>Gallery</Link>
+          <div className='pc-menu gap-x-10'>
+            <Link href='/about'>ABOUT</Link>
+            <Link href='/gallery'>GALLERY</Link>
           </div>
         </HeaderInner>
       </Wrapper>

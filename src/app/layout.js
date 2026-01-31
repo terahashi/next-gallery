@@ -1,18 +1,23 @@
-// import { Geist, Geist_Mono } from 'next/font/google';
+//layout.jsは全ての土台であり、アプリケーション全体を包む役割を果たします。
+//このファイル「layout.jsは"必ずServer Componentを保つ"」
+import { Open_Sans } from 'next/font/google';
+import { Noto_Sans_JP } from 'next/font/google';
+
 import StyledComponentsRegistry from './lib/styled-components-registry';
 import './globals.css';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 
-// const geistSans = Geist({
-//   variable: '--font-geist-sans',
-//   subsets: ['latin'],
-// });
+//Google Fontの設定(variableを使うのは複数フォントを使う場合に便利)
+const openSans = Open_Sans({
+  variable: '--font-open-sans',
+  subsets: ['latin'], ////ラテン文字をサブセットとして設定
+});
 
-// const geistMono = Geist_Mono({
-//   variable: '--font-geist-mono',
-//   subsets: ['latin'],
-// });
+const notoSans = Noto_Sans_JP({
+  variable: '--font-noto-sans-jp',
+  subsets: ['latin'],
+});
 
 export const metadata = {
   title: 'Next Gallery Site',
@@ -23,7 +28,7 @@ export default function RootLayout({ children }) {
   return (
     <html lang='en'>
       {/* <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>{children}</body> */}
-      <body>
+      <body className={`${openSans.variable} ${notoSans.variable} antialiased`}>
         <StyledComponentsRegistry>
           <Header />
           {children}

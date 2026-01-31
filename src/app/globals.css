@@ -51,24 +51,19 @@
     /* font-sizeを rem で使用するための基準16px */
     font-size: 16px;
   }
+
   body {
-    /* font-family: 'Poppins', sans-serif; */
+    font-family: var(--font-open-sans), sans-serif;
     word-break: break-all; /* 日本語用の途中で折り返してよい*/
     overflow-wrap: break-word; /* URLなどの長い単語が行からはみ出す場合、途中で折り返してよい */
-
     font-size: 1rem;
     line-height: 1.7;
     letter-spacing: 0.02em;
   }
+
   /* ⬇︎日本語タイトルだけにNotoSansJPを使用する。端末環境ではsans-serifが使用。 */
   .title__ja {
-    font-family: 'Noto Sans JP', sans-serif;
-  }
-
-  img {
-    width: 100%;
-    height: auto;
-    object-fit: cover;
+    font-family: var(--font-noto-sans-jp), sans-serif;
   }
 
   h1,
