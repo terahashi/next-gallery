@@ -48,7 +48,7 @@ const Header = () => {
           </div>
 
           <div className='pc-menu gap-x-10'>
-            <Link href='/about'>ABOUT</Link>
+            {/* <Link href='/about'>ABOUT</Link> */}
             <Link href='/gallery'>GALLERY</Link>
           </div>
         </HeaderInner>
