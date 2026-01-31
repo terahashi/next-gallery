@@ -4,7 +4,7 @@ const Footer = () => {
   return (
     <Wrapper>
       <Inner>
-        <div className='p-10 text-center text-[0.7rem]'>©2026 Lib-Gallery. All Rights Reserved.</div>
+        <div className='text-[0.8rem] p-10 text-center'>©2026 Lib-Gallery. All Rights Reserved.</div>
       </Inner>
     </Wrapper>
   );
