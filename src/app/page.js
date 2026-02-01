@@ -1,13 +1,26 @@
+//Vercel本番はSSG(静的生成)なので「画像ランダム表示の Math.random()が「ビルド時に1回だけ評価されて、そのまま停止」してしまう。
+//解決策は Client Component にして、useState, useEffectを使い、クライアント側でランダム表示させる。
+'use client';
+import { useState, useEffect } from 'react'; //
 import Image from 'next/image'; //Next.jsでは基本的に <Image />コンポーネントを使う
 import Link from 'next/link'; //Linkコンポーネント
 
 //コンポーネント & Data
 import { Wrapper, Inner } from '../components/common/LayoutPrimitives';
-import topImages from '../data/topImages'; //画像データの配列
+import { topImages } from '../data/topImages'; //画像データの配列
 
 export default function Home() {
-  //⬇︎ランダムで表示する画像を選択
-  const randomImages = topImages[Math.floor(Math.random() * topImages.length)];
+  //⬇︎stateでランダム画像を管理
+  const [randamImages, setRandamImages] = useState(null);
+
+  //⬇︎useEffectでページ更新するたびに画像をランダム表示
+  useEffect(() => {
+    const img = topImages[Math.floor(Math.random() * topImages.length)];
+    setRandamImages(img); //setRandamImagesでstateを更新する
+  }, []);
+
+  //まだrandamImagesが「null」の場合は何も表示しない
+  if (!randamImages) return null;
 
   return (
     <Wrapper>
@@ -20,7 +33,7 @@ export default function Home() {
               <div className='text-center'>
                 {/* ⬇︎①「width={数字} height={数字}を指定した場合のImageコンポーネント」 */}
                 <div className='mb-3 w-full max-w-md '>
-                  <Image src={randomImages} className='w-auto h-auto object-cover' alt='TopImage' width={randomImages.width} height={randomImages.height} priority />
+                  <Image src={randamImages} className='w-auto h-auto object-cover' alt='TopImage' width={randamImages.width} height={randamImages.height} priority />
                 </div>
 
                 {/* ⬇︎②「fillを指定した場合のImageコンポーネント」➡︎33vwは条件に当てはまらなかった場合に適用される。 */}

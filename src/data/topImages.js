@@ -1,4 +1,4 @@
-const TopImages = [
+export const topImages = [
   {
     src: '/images/img-01.jpg',
     width: 1000, //横長
@@ -35,4 +35,3 @@ const TopImages = [
     height: 1000,
   },
 ];
-export default TopImages;
