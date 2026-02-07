@@ -7,7 +7,7 @@ import Link from 'next/link'; //Linkコンポーネント
 
 //コンポーネント & Data
 import { Wrapper, Inner } from '../components/common/LayoutPrimitives';
-import { topImages } from '../data/topImages'; //画像データの配列
+import topImages from '../data/topImages'; //画像データの配列
 
 export default function Home() {
   //⬇︎stateでランダム画像を管理

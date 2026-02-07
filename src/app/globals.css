@@ -98,30 +98,30 @@
   }
   h5 {
     font-size: var(--text-heading-h5);
-    color: var(--color-white);
+    color: var(--color-black);
     line-height: 1.4;
   }
   h6 {
     font-size: var(--text-heading-h6);
-    color: var(--color-white);
+    color: var(--color-black);
     line-height: 1.45;
   }
 
   p {
     font-size: var(--text-base);
-    color: var(--color-white);
+    color: var(--color-black);
     line-height: 1.4;
   }
 
   span {
     font-size: var(--text-span);
-    color: var(--color-white);
+    color: var(--color-black);
     line-height: 1.4;
   }
 
   small {
     font-size: var(--text-small);
-    color: var(--color-white);
+    color: var(--color-black);
     line-height: 1.4;
   }
 
