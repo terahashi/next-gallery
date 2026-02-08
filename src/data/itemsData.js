@@ -1,7 +1,10 @@
 //// galleryページに使用される全ての画像データ
-const items = [
+
+const itemsData = [
   //2025
   {
+    id: '2025-001',
+    thumbnail: '/images/thumb/2025/img-01_80x80.jpg',
     src: '/images/img-01.jpg',
     width: 100, //横長
     height: 68,
@@ -10,6 +13,7 @@ const items = [
     year: 2025,
   },
   {
+    id: '2025-002',
     src: '/images/img-02.jpg',
     width: 100, //横長
     height: 68,
@@ -18,6 +22,7 @@ const items = [
     year: 2025,
   },
   {
+    id: '2025-003',
     src: '/images/img-03.jpg',
     width: 100, //横長
     height: 68,
@@ -28,6 +33,7 @@ const items = [
 
   //2024
   {
+    id: '2024-001',
     src: '/images/img-04.jpg',
     width: 100, //横長
     height: 68,
@@ -36,6 +42,7 @@ const items = [
     year: 2024,
   },
   {
+    id: '2024-002',
     src: '/images/img-05.jpg',
     width: 100, //横長
     height: 68,
@@ -44,6 +51,7 @@ const items = [
     year: 2024,
   },
   {
+    id: '2024-003',
     src: '/images/img-06.jpg',
     width: 100, //横長
     height: 68,
@@ -54,6 +62,7 @@ const items = [
 
   //2023
   {
+    id: '2023-001',
     src: '/images/img-07.jpg',
     width: 100, //横長
     height: 68,
@@ -63,6 +72,7 @@ const items = [
     text: ' ここ',
   },
   {
+    id: '2023-002',
     src: '/images/img-01.jpg',
     width: 100, //横長
     height: 68,
@@ -71,15 +81,18 @@ const items = [
     year: 2023,
   },
   {
+    id: '2023-003',
     src: '/images/img-02.jpg',
     width: 100, //横長
     height: 68,
     name: '鮭',
     categories: ['fish', 'kudamono', '埼玉'],
     year: 2023,
-  }, //2024-2025
+  },
 
+  //2024-2025
   {
+    id: '2024-2025-001',
     src: '/images/img-03.jpg',
     width: 100, //横長
     height: 68,
@@ -89,6 +102,7 @@ const items = [
     text: ' 自由なテキスト',
   },
   {
+    id: '2024-2025-002',
     src: '/images/img-04.jpg',
     width: 100, //横長
     height: 68,
@@ -99,4 +113,4 @@ const items = [
   },
 ];
 
-export default items;
+export default itemsData;
