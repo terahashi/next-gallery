@@ -4,6 +4,13 @@ import Link from 'next/link';
 import styled from 'styled-components';
 import { Wrapper, Inner } from './common/LayoutPrimitives';
 
+//⭐️アクティブリンクで現在いるページのリンクに目印を付与する。
+// 「usePathname() × clsx」
+//clsxとは？ -> クラス制御。「条件付き className を超シンプルに書けるツール」
+//普通だと <Link href="/gallery" className={pathname === '/gallery' ? 'active' : ''} だが今回は勉強のためにclsxを使う。
+import clsx from 'clsx';
+import { usePathname } from 'next/navigation';
+
 const HeaderWrap = styled.header`
   position: fixed;
   top: 0;
@@ -25,6 +32,20 @@ const HeaderWrap = styled.header`
   }
   a {
     font-size: 1.1rem;
+    position: relative; //::after用に必須
+    &.is-active {
+      color: #000;
+      font-weight: bold;
+    }
+    &.is-active::after {
+      content: '';
+      position: absolute;
+      left: 0;
+      bottom: -2px;
+      width: 100%;
+      height: 2.5px;
+      background-color: #000;
+    }
   }
 `;
 
@@ -37,6 +58,9 @@ const HeaderInner = styled(Inner)`
 `;
 
 const Header = () => {
+  //⬇︎usePathname()で現在のルートのパス名を文字列として取得
+  const pathname = usePathname();
+
   return (
     <HeaderWrap>
       <Wrapper>
@@ -48,8 +72,12 @@ const Header = () => {
           </div>
 
           <div className='pc-menu gap-x-10'>
-            {/* <Link href='/about'>ABOUT</Link> */}
-            <Link href='/gallery'>GALLERY</Link>
+            {/* <Link href='/about' className={clsx(pathname === '/about' && 'is-active')}>
+              ABOUT
+            </Link> */}
+            <Link href='/gallery' className={clsx(pathname === '/gallery' && 'is-active')}>
+              GALLERY
+            </Link>
           </div>
         </HeaderInner>
       </Wrapper>

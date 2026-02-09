@@ -1,9 +1,9 @@
 ////ギャラリーページ
 'use client';
-
 import { useState, useMemo } from 'react';
 import { useSearchParams } from 'next/navigation';
 import Image from 'next/image'; //Next.jsでは基本的に <Image />コンポーネントを使う
+import clsx from 'clsx';
 
 //⬇︎lib/data
 import itemsData from '@/data/itemsData.js';
@@ -14,7 +14,7 @@ import { Wrapper, Inner } from '../../components/common/LayoutPrimitives';
 import styled from 'styled-components';
 
 //styled-components
-//・上部のフィルタボタン
+//上部フィルタボタン
 const ListButton = styled.li`
   cursor: pointer;
   padding: 8px 16px;
@@ -55,8 +55,8 @@ const Gallery = () => {
   return (
     <Wrapper>
       <Inner>
-        <div className='mt-[200px]'>
-          <div className='text-[red] font-bold mb-20'>ギャラリーページ</div>
+        <div className='mt-[120px]'>
+          <div className='text-[red] font-bold'>ギャラリーページ</div>
 
           {/* 上部のカテゴリボタン */}
           <div>
@@ -77,22 +77,22 @@ const Gallery = () => {
           </div>
 
           {/* ⬇︎flexエリア */}
-          <div className='flex mt-30'>
+          <div className='flex mt-[50px] gap-x-15 items-start justify-center'>
             {/* 左表示(画像表示エリア)：サムネイルでクリックされた画像を大きく表示する */}
-            <div className='w-[60%] flex justify-start items-center flex-col'>
-              {/* ⬇︎選択された画像を表示がtrueの場合は表示する、falseの場合はpタグを表示する。 */}
-              {selectedImage ? <Image src={selectedImage.src} alt={selectedImage.name} width={800} height={600} className='w-auto h-auto object-cover' priority /> : <p>sss</p>}
+            <div className='flex justify-start items-center flex-col w-[50%] self-start p-[5%] bg-[#e7e7e7]'>
+              {selectedImage && <Image src={selectedImage.src} alt={selectedImage.name} width={800} height={600} className='w-full h-auto object-cover' priority />}
             </div>
+
             {/* 右表示(サムネイル)：グルーピングされた結果を表示する */}
-            <div className='flex flex-col w-[40%]'>
+            <div className='flex flex-col w-[30%] overflow-y-auto overflow-x-hidden max-h-[65vh] pb-[30vh]'>
               {Object.entries(grouped)
                 .sort((a, b) => b[0] - a[0])
                 .map(([year, items]) => (
-                  <section key={year}>
+                  <section key={year} className='mb-[20px] '>
                     <h3>{year}年</h3>
 
                     {/* ⬇︎itemを表示(フィルタリング+グルーピングされたデータ) */}
-                    <div className='flex flex-wrap'>
+                    <div className='flex justify-start flex-nowrap gap-[10px]'>
                       {items.map((item) => (
                         <div key={item.name}>
                           {/* ⬇︎要素を表示 */}
@@ -102,7 +102,7 @@ const Gallery = () => {
 
                           {/* ⬇︎(サムネイル画像の役割)画像を表示 */}
                           {/* onClickで更新用関数setSelectedImageを実行して、『item』をselectedImageにセットする。 */}
-                          <div onClick={() => setSelectedImage(item)} className='cursor-pointer'>
+                          <div onClick={() => setSelectedImage(item)} className={clsx('cursor-pointer inline-block border-2', selectedImage?.id === item.id ? 'border-sky-400' : 'border-transparent')}>
                             <Image src={item.src} className='w-auto h-auto object-cover' alt={item.name} width={item.width} height={item.height} priority />
                           </div>
 
