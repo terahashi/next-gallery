@@ -129,6 +129,20 @@
     font-size: var(--text-button);
     line-height: 1.4;
   }
+
+  /* ⬇︎スクロールバーの横幅 */
+  .scroll-area::-webkit-scrollbar {
+    width: 10px;
+  }
+  /* ⬇︎(薄い背景)スクロールバーの全体スクロール量 */
+  .scroll-area::-webkit-scrollbar-track {
+    background: #f1f1f1;
+  }
+  /* ⬇︎(中身の濃いグレー)スクロールバー */
+  .scroll-area::-webkit-scrollbar-thumb {
+    background: #999;
+    border-radius: 4px;
+  }
 }
 
 /* ⬇︎デフォルト */

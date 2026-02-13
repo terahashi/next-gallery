@@ -77,43 +77,41 @@ const Gallery = () => {
           </div>
 
           {/* ⬇︎flexエリア */}
-          <div className='flex mt-[50px] gap-x-15 items-start justify-center'>
+          <div className='flex mt-[50px] items-start justify-center gap-x-[15px]'>
             {/* 左表示(画像表示エリア)：サムネイルでクリックされた画像を大きく表示する */}
-            <div className='flex justify-start items-center flex-col w-[50%] self-start p-[5%] bg-[#e7e7e7]'>
-              {selectedImage && <Image src={selectedImage.src} alt={selectedImage.name} width={800} height={600} className='w-full h-auto object-cover' priority />}
+            <div className='flex justify-start items-center flex-col w-[60%] self-start p-[50px_80px]'>
+              {selectedImage && <Image src={selectedImage.src} alt={selectedImage.name} width={selectedImage.width} height={selectedImage.height} className='w-full h-auto object-cover' priority />}
             </div>
 
             {/* 右表示(サムネイル)：グルーピングされた結果を表示する */}
-            <div className='flex flex-col w-[30%] overflow-y-auto overflow-x-hidden max-h-[65vh] pb-[30vh]'>
+            <div className='scroll-area flex flex-col w-[30%] max-h-[65vh] overflow-y-scroll overflow-x-hidden max-h-[65vh] p-[0] pb-[30vh]'>
               {Object.entries(grouped)
                 .sort((a, b) => b[0] - a[0])
                 .map(([year, items]) => (
-                  <section key={year} className='mb-[20px] '>
-                    <h3>{year}年</h3>
+                  <section key={year}>
+                    <h3 className='mb-0'>{year}年</h3>
 
                     {/* ⬇︎itemを表示(フィルタリング+グルーピングされたデータ) */}
-                    <div className='flex justify-start flex-nowrap gap-[10px]'>
+                    <div className='flex justify-start flex-nowrap'>
                       {items.map((item) => (
                         <div key={item.name}>
                           {/* ⬇︎要素を表示 */}
-                          <div>
+                          {/* <div>
                             <span>{item.name}</span>
-                          </div>
-
+                          </div> */}
                           {/* ⬇︎(サムネイル画像の役割)画像を表示 */}
                           {/* onClickで更新用関数setSelectedImageを実行して、『item』をselectedImageにセットする。 */}
                           <div onClick={() => setSelectedImage(item)} className={clsx('cursor-pointer inline-block border-2', selectedImage?.id === item.id ? 'border-sky-400' : 'border-transparent')}>
-                            <Image src={item.src} className='w-auto h-auto object-cover' alt={item.name} width={item.width} height={item.height} priority />
+                            <Image src={item.thumbnail} className=' object-cover' alt={item.name} width={item.thumbWidth} height={item.thumbHeight} priority />
                           </div>
-
                           {/* ⬇︎横のカテゴリボタン 表示 */}
-                          <div>
+                          {/* <div>
                             {item.categories.map((cate) => (
                               <button key={cate} onClick={() => setFilter(cate)}>
                                 {cate}
                               </button>
                             ))}
-                          </div>
+                          </div> */}
                         </div>
                       ))}
                     </div>
