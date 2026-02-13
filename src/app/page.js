@@ -33,7 +33,7 @@ export default function Home() {
               <div className='text-center'>
                 {/* ⬇︎①「width={数字} height={数字}を指定した場合のImageコンポーネント」 */}
                 <div className='mb-3 w-full max-w-md '>
-                  <Image src={randamImages} className='w-auto h-auto object-cover' alt='TopImage' width={randamImages.width} height={randamImages.height} priority />
+                  <Image src={randamImages.src} className='w-auto h-auto object-cover' alt={randamImages.name} width={randamImages.width} height={randamImages.height} priority />
                 </div>
 
                 {/* ⬇︎②「fillを指定した場合のImageコンポーネント」 33vwは条件に当てはまらなかった場合に適用される。 */}
