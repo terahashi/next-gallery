@@ -17,17 +17,28 @@ import styled from 'styled-components';
 //上部フィルタボタン
 const ListButton = styled.li`
   cursor: pointer;
-  padding: 8px 16px;
-  border-bottom: 2px solid transparent;
-  color: #000;
-  //⬇︎{ $isActive }は分割代入です。propsの中の$isActiveプロパティを取り出して使う。
+  /* display: inline-block; */
+  border-radius: 3em;
+  letter-spacing: 0.1em;
+  padding: 2px 5px;
+  text-align: center;
+  font-size: 12px;
+  font-weight: bold;
+  border: 2px solid rgb(15, 118, 144);
+  color: rgb(15, 118, 144);
+
+  &:hover {
+    opacity: 0.7;
+  }
+
+  //⬇︎{ $isActive }は分割代入。propsの中の$isActiveプロパティを取り出して使う。
   ${({ $isActive }) =>
     $isActive &&
     //&& 論理AND演算子で、$isActiveがtrueの場合に下記のcssが適用される
     `
-      color: #e60023;
+      background-color: rgb(15, 118, 144);
+      color: #fff;
       font-weight: bold;
-      border-bottom: 2px solid #e60023;
     `}
 `;
 
@@ -55,68 +66,89 @@ const Gallery = () => {
   return (
     <Wrapper>
       <Inner>
-        <div className='mt-[120px]'>
-          <div className='text-[red] font-bold'>ギャラリーページ</div>
-
-          {/* 上部のカテゴリボタン */}
-          <div>
-            <ul className='flex justify-center items-center flex-wrap gap-x-10'>
-              <ListButton $isActive={filter === null} onClick={() => setFilter(null)}>
-                全て
-              </ListButton>
-              <ListButton $isActive={filter === 'vegetable'} onClick={() => setFilter('vegetable')}>
-                野菜
-              </ListButton>
-              <ListButton $isActive={filter === 'fruit'} onClick={() => setFilter('fruit')}>
-                フルーツ
-              </ListButton>
-              <ListButton $isActive={filter === 'fish'} onClick={() => setFilter('fish')}>
-                魚
-              </ListButton>
-            </ul>
-          </div>
-
-          {/* ⬇︎flexエリア */}
-          <div className='flex mt-[50px] items-start justify-center gap-x-[15px]'>
-            {/* 左表示(画像表示エリア)：サムネイルでクリックされた画像を大きく表示する */}
-            <div className='flex justify-start items-center flex-col w-[60%] self-start p-[50px_80px]'>
+        <div className='mt-[170px]'>
+          {/* flex */}
+          <div className='flex mt-[50px] items-start justify-center gap-x-5'>
+            {/* ⬇︎左表示(画像表示エリア)：サムネイルでクリックされた画像を大きく表示する */}
+            <div className='flex-[2] flex justify-start items-center flex-col self-start md:m-[50px_80px] w-full max-w-[900px]'>
               {selectedImage && <Image src={selectedImage.src} alt={selectedImage.name} width={selectedImage.width} height={selectedImage.height} className='w-full h-auto object-cover' priority />}
             </div>
 
-            {/* 右表示(サムネイル)：グルーピングされた結果を表示する */}
-            <div className='scroll-area flex flex-col w-[30%] max-h-[65vh] overflow-y-scroll overflow-x-hidden max-h-[65vh] p-[0] pb-[30vh]'>
-              {Object.entries(grouped)
-                .sort((a, b) => b[0] - a[0])
-                .map(([year, items]) => (
-                  <section key={year}>
-                    <h3 className='mb-0'>{year}年</h3>
+            {/* ⬇︎右表示(サムネイル)：グルーピングされた結果を表示する */}
+            <div className='flex-1 flex flex-col p-[0] pb-[30vh]'>
+              {/* 上部のカテゴリボタン */}
+              <div className='m-[0_0_20px]'>
+                <ul className='flex justify-start items-center flex-wrap gap-1'>
+                  <ListButton $isActive={filter === null} onClick={() => setFilter(null)}>
+                    全て
+                  </ListButton>
+                  <ListButton $isActive={filter === 'vegetable'} onClick={() => setFilter('vegetable')}>
+                    イタリア
+                  </ListButton>
+                  <ListButton $isActive={filter === 'fruit'} onClick={() => setFilter('fruit')}>
+                    ポルトガル
+                  </ListButton>
+                  <ListButton $isActive={filter === 'fish'} onClick={() => setFilter('fish')}>
+                    スペイン
+                  </ListButton>
+                  <ListButton $isActive={filter === 'fish'} onClick={() => setFilter('fish')}>
+                    スペイン
+                  </ListButton>{' '}
+                  <ListButton $isActive={filter === 'fish'} onClick={() => setFilter('fish')}>
+                    スペイン
+                  </ListButton>{' '}
+                  <ListButton $isActive={filter === 'fish'} onClick={() => setFilter('fish')}>
+                    スペイン
+                  </ListButton>{' '}
+                  <ListButton $isActive={filter === 'fish'} onClick={() => setFilter('fish')}>
+                    スペイン
+                  </ListButton>
+                </ul>
+              </div>
 
-                    {/* ⬇︎itemを表示(フィルタリング+グルーピングされたデータ) */}
-                    <div className='flex justify-start flex-nowrap'>
-                      {items.map((item) => (
-                        <div key={item.name}>
-                          {/* ⬇︎要素を表示 */}
-                          {/* <div>
-                            <span>{item.name}</span>
-                          </div> */}
-                          {/* ⬇︎(サムネイル画像の役割)画像を表示 */}
-                          {/* onClickで更新用関数setSelectedImageを実行して、『item』をselectedImageにセットする。 */}
-                          <div onClick={() => setSelectedImage(item)} className={clsx('cursor-pointer inline-block border-2', selectedImage?.id === item.id ? 'border-sky-400' : 'border-transparent')}>
-                            <Image src={item.thumbnail} className=' object-cover' alt={item.name} width={item.thumbWidth} height={item.thumbHeight} priority />
-                          </div>
-                          {/* ⬇︎横のカテゴリボタン 表示 */}
-                          {/* <div>
+              <div className='scroll-area overflow-y-scroll overflow-x-hidden max-h-[65vh] p-[0] pb-[30vh]'>
+                {Object.entries(grouped)
+                  .sort((a, b) => b[0] - a[0])
+                  .map(([year, items]) => (
+                    <section key={year}>
+                      <div className='flex'>
+                        {/* 年 */}
+                        <p className='mb-0'>{year}年</p>
+                        <div className='ss'></div>
+                      </div>
+
+                      {/* ⬇︎「サムネイル画像達を表示」する。つまりitemを表示(フィルタリング+グルーピングされたデータ) */}
+                      <div className='flex justify-start flex-nowrap'>
+                        {items.map((item) => (
+                          <div key={item.name}>
+                            {/* 名前を表示 */}
+                            {/* <div>
+                                <span>{item.name}</span>
+                              </div> */}
+
+                            {/* (サムネイル)表示 */}
+                            <button
+                              type='button'
+                              onClick={() => setSelectedImage(item)}
+                              className={clsx('cursor-pointer inline-block border-2', selectedImage?.id === item.id ? 'border-sky-400' : 'border-transparent')}
+                            >
+                              <Image src={item.thumbnail} className=' object-cover' alt={item.name} width={item.thumbWidth} height={item.thumbHeight} priority />
+                            </button>
+
+                            {/* 横のカテゴリボタン 表示 */}
+                            {/* <div>
                             {item.categories.map((cate) => (
                               <button key={cate} onClick={() => setFilter(cate)}>
                                 {cate}
                               </button>
                             ))}
                           </div> */}
-                        </div>
-                      ))}
-                    </div>
-                  </section>
-                ))}
+                          </div>
+                        ))}
+                      </div>
+                    </section>
+                  ))}
+              </div>
             </div>
           </div>
         </div>
