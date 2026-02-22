@@ -12,6 +12,7 @@ import render from '../lib/render';
 //⬇︎コンポーネント
 import { Wrapper, Inner } from '../../components/common/LayoutPrimitives';
 import styled from 'styled-components';
+import YearSepalatorLine from '@/components/common/YearSepalatorLine';
 
 //styled-components
 //上部フィルタボタン
@@ -26,6 +27,7 @@ const ListButton = styled.li`
   font-weight: bold;
   border: 2px solid rgb(15, 118, 144);
   color: rgb(15, 118, 144);
+  list-style-type: none;
 
   &:hover {
     opacity: 0.7;
@@ -67,15 +69,30 @@ const Gallery = () => {
     <Wrapper>
       <Inner>
         <div className='mt-[170px]'>
-          {/* flex */}
+          {/* Flex start */}
           <div className='flex mt-[50px] items-start justify-center gap-x-5'>
             {/* ⬇︎左表示(画像表示エリア)：サムネイルでクリックされた画像を大きく表示する */}
             <div className='flex-[2] flex justify-start items-center flex-col self-start md:m-[50px_80px] w-full max-w-[900px]'>
               {selectedImage && <Image src={selectedImage.src} alt={selectedImage.name} width={selectedImage.width} height={selectedImage.height} className='w-full h-auto object-cover' priority />}
+
+              {/* (選択中画像に適応した)名前 を表示させる */}
+              {selectedImage && <div className='flex'>{selectedImage.name}</div>}
+
+              {/* (選択中画像に適応した)カテゴリボタン を表示させる */}
+              {selectedImage && (
+                <div className='flex'>
+                  {selectedImage.categories.map((cate) => (
+                    <ListButton className='ml-[5px]' key={cate} onClick={() => setFilter(cate)}>
+                      {cate}
+                    </ListButton>
+                  ))}
+                </div>
+              )}
             </div>
 
             {/* ⬇︎右表示(サムネイル)：グルーピングされた結果を表示する */}
             <div className='flex-1 flex flex-col p-[0] pb-[30vh]'>
+              <h3 className='text-[var(--color-gray)] font-bold'>Location</h3>
               {/* 上部のカテゴリボタン */}
               <div className='m-[0_0_20px]'>
                 <ul className='flex justify-start items-center flex-wrap gap-1'>
@@ -106,6 +123,7 @@ const Gallery = () => {
                 </ul>
               </div>
 
+              {/* 下部のサムネイル */}
               <div className='scroll-area overflow-y-scroll overflow-x-hidden max-h-[65vh] p-[0] pb-[30vh]'>
                 {Object.entries(grouped)
                   .sort((a, b) => b[0] - a[0])
@@ -113,14 +131,14 @@ const Gallery = () => {
                     <section key={year}>
                       <div className='flex'>
                         {/* 年 */}
-                        <p className='mb-0'>{year}年</p>
-                        <div className='ss'></div>
+                        <p className='mb-0 whitespace-nowrap'>{year}年</p>
+                        <YearSepalatorLine />
                       </div>
 
                       {/* ⬇︎「サムネイル画像達を表示」する。つまりitemを表示(フィルタリング+グルーピングされたデータ) */}
                       <div className='flex justify-start flex-nowrap'>
                         {items.map((item) => (
-                          <div key={item.name}>
+                          <div key={item.id}>
                             {/* 名前を表示 */}
                             {/* <div>
                                 <span>{item.name}</span>
@@ -132,7 +150,7 @@ const Gallery = () => {
                               onClick={() => setSelectedImage(item)}
                               className={clsx('cursor-pointer inline-block border-2', selectedImage?.id === item.id ? 'border-sky-400' : 'border-transparent')}
                             >
-                              <Image src={item.thumbnail} className=' object-cover' alt={item.name} width={item.thumbWidth} height={item.thumbHeight} priority />
+                              <Image src={item.thumbnail} className='object-cover' alt={item.name} width={item.thumbWidth} height={item.thumbHeight} priority />
                             </button>
 
                             {/* 横のカテゴリボタン 表示 */}
