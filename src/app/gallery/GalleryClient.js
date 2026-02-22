@@ -54,6 +54,9 @@ const Gallery = () => {
   const initialImage = itemsData.find((item) => String(item.id) === selectedId) ?? itemsData[0];
   const [selectedImage, setSelectedImage] = useState(initialImage);
 
+  //⬇︎スマホ用 モーダル表示管理
+  const [isModalOpen, setModalOpen] = useState(false);
+
   ////⬇︎grouped関数
   //・render関数を実行してフィルタリング+グルーピングを実行 -> 結果を取得する関数
   //・useMemo(値のメモ化)...重い計算処理を毎回実行しないようにするため。
@@ -72,7 +75,7 @@ const Gallery = () => {
           {/* Flex start */}
           <div className='flex mt-[50px] items-start justify-center gap-x-5'>
             {/* ⬇︎左表示(画像表示エリア)：サムネイルでクリックされた画像を大きく表示する */}
-            <div className='flex-[2] flex justify-start items-center flex-col self-start md:m-[50px_80px] w-full max-w-[900px]'>
+            <div className='hidden flex-[2] md:flex justify-start items-center flex-col self-start md:m-[50px_80px] w-full max-w-[900px]'>
               {selectedImage && <Image src={selectedImage.src} alt={selectedImage.name} width={selectedImage.width} height={selectedImage.height} className='w-full h-auto object-cover' priority />}
 
               {/* (選択中画像に適応した)名前 を表示させる */}
@@ -147,7 +150,10 @@ const Gallery = () => {
                             {/* (サムネイル)表示 */}
                             <button
                               type='button'
-                              onClick={() => setSelectedImage(item)}
+                              onClick={() => {
+                                setSelectedImage(item);
+                                setModalOpen(true);
+                              }}
                               className={clsx('cursor-pointer inline-block border-2', selectedImage?.id === item.id ? 'border-sky-400' : 'border-transparent')}
                             >
                               <Image src={item.thumbnail} className='object-cover' alt={item.name} width={item.thumbWidth} height={item.thumbHeight} priority />
@@ -171,6 +177,17 @@ const Gallery = () => {
           </div>
         </div>
       </Inner>
+
+      {/* ⬇︎スマホ用/モーダル表示エリア */}
+      {isModalOpen && selectedImage && (
+        <div className='md:hidden fixed inset-0 z-1000 flex items-center justify-center bg-black/75' onClick={() => setModalOpen(false)}>
+          <div className='relative max-w-[95%] w-full rounded-lg'>
+            <Image src={selectedImage.src} alt={selectedImage.name} width={selectedImage.width} height={selectedImage.height} className='w-full h-auto object-cover' />
+            {/* ⬇︎写真の名前 */}
+            <div className='mt-3 font-bold text-[1.2rem] text-center text-[var(--color-white)]'>{selectedImage.name}</div>
+          </div>
+        </div>
+      )}
     </Wrapper>
   );
 };
