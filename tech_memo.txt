@@ -1,5 +1,39 @@
 
 
+
+------------------------------------------------------------------
+------------------------------------------------------------------
+🔶ダークモードを実装しよう
+■使用するもの
+・インストールnext-themes(ダークモードなどのテーマの管理ライブラリ)
+・Tailwind CSS
+
+①next-themesをインストール
+yarn add next-themes
+
+②app/layout.js（・App Router（app/ ディレクトリ））
+layout.jsに「next-themesを組み込む。」
+ <ThemeProvider attribute='class' defaultTheme='light' enableSystem>
+
+③components/Header.jsx
+ここに
+・ダークモード切り替えボタン
+・トグル処理
+
+④TailwindCSS / ダーク用TailwindCSS
+・ダーク用「darkMode: 'class'」をtailwind.config.js に書く
+✅⬇︎ダークモード用の条件付きクラスを使う
+className="bg-white text-black dark:bg-black dark:text-white"
+
+
+
+
+
+
+
+
+
+
 ------------------------------------------------------------------
 ------------------------------------------------------------------
 🔶clsxを使って「アクティブリンクを作成するのはすごく楽だった！」
