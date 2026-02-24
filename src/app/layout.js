@@ -4,7 +4,10 @@ import { Open_Sans } from 'next/font/google';
 import { Noto_Sans_JP } from 'next/font/google';
 
 import StyledComponentsRegistry from './lib/styled-components-registry';
+import { ThemeProvider } from 'next-themes';
 import './globals.css';
+
+//components
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 
@@ -26,14 +29,16 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang='en'>
-      {/* <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>{children}</body> */}
+    //「suppressHydrationWarningとは？」サーバーとクライアントでDOM内容が異なっても警告を出さないようにするための仕組み。
+    <html lang='en' suppressHydrationWarning>
       <body className={`${openSans.variable} ${notoSans.variable} antialiased`}>
-        <StyledComponentsRegistry>
-          <Header />
-          {children}
-          <Footer />
-        </StyledComponentsRegistry>
+        <ThemeProvider attribute='class' defaultTheme='light' enableSystem>
+          <StyledComponentsRegistry>
+            <Header />
+            {children}
+            <Footer />
+          </StyledComponentsRegistry>
+        </ThemeProvider>
       </body>
     </html>
   );
