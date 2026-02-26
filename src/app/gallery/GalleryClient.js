@@ -10,7 +10,7 @@ import itemsData from '@/data/itemsData.js';
 import render from '../lib/render';
 
 //⬇︎コンポーネント
-import { Wrapper, Inner } from '../../components/common/LayoutPrimitives';
+import { PageContainer, Wrapper, Inner } from '../../components/common/LayoutPrimitives';
 import styled from 'styled-components';
 import YearSepalatorLine from '@/components/common/YearSepalatorLine';
 
@@ -18,7 +18,7 @@ import YearSepalatorLine from '@/components/common/YearSepalatorLine';
 //上部フィルタボタン
 const ListButton = styled.li`
   cursor: pointer;
-  /* display: inline-block; */
+  display: inline-block;
   border-radius: 3em;
   letter-spacing: 0.1em;
   padding: 2px 5px;
@@ -28,11 +28,12 @@ const ListButton = styled.li`
   border: 2px solid rgb(15, 118, 144);
   color: rgb(15, 118, 144);
   list-style-type: none;
-
+  &:nth-of-type(1) {
+    margin-left: 0;
+  }
   &:hover {
     opacity: 0.7;
   }
-
   //⬇︎{ $isActive }は分割代入。propsの中の$isActiveプロパティを取り出して使う。
   ${({ $isActive }) =>
     $isActive &&
@@ -42,6 +43,11 @@ const ListButton = styled.li`
       color: #fff;
       font-weight: bold;
     `}
+`;
+
+const ListButton2 = styled(ListButton)`
+  border: 2px solid rgb(138, 137, 137);
+  color: rgb(138, 137, 137);
 `;
 
 const Gallery = () => {
@@ -69,35 +75,35 @@ const Gallery = () => {
   }, [filter]); //⬅︎再実行の条件。filterが変わったら再実行する。
 
   return (
-    <Wrapper>
-      <Inner>
-        <div className='mt-[170px]'>
+    <PageContainer>
+      <Wrapper>
+        <Inner>
           {/* Flex start */}
-          <div className='flex mt-[50px] items-start justify-center gap-x-5'>
+          <div className='flex mt-[50px] md:mt-[100px] items-start justify-center gap-x-5'>
             {/* ⬇︎左表示(画像表示エリア)：サムネイルでクリックされた画像を大きく表示する */}
-            <div className='hidden flex-[2] md:flex justify-start items-center flex-col self-start md:m-[50px_80px] w-full max-w-[900px]'>
+            <div className='hidden flex-[2] md:flex justify-start items-start flex-col self-start md:m-[50px_80px] w-full max-w-[900px]'>
               {selectedImage && <Image src={selectedImage.src} alt={selectedImage.name} width={selectedImage.width} height={selectedImage.height} className='w-full h-auto object-cover' priority />}
 
               {/* (選択中画像に適応した)名前 を表示させる */}
-              {selectedImage && <div className='flex'>{selectedImage.name}</div>}
+              {selectedImage && <div className='title__ja md:text-[1.2rem] font-bold md:mt-[12px]'>{selectedImage.name}</div>}
 
               {/* (選択中画像に適応した)カテゴリボタン を表示させる */}
               {selectedImage && (
-                <div className='flex'>
+                <ul className='flex justify-start items-center flex-wrap gap-1 md:mt-[4px]'>
                   {selectedImage.categories.map((cate) => (
-                    <ListButton className='ml-[5px]' key={cate} onClick={() => setFilter(cate)}>
+                    <ListButton2 key={cate} onClick={() => setFilter(cate)}>
                       {cate}
-                    </ListButton>
+                    </ListButton2>
                   ))}
-                </div>
+                </ul>
               )}
             </div>
 
             {/* ⬇︎右表示(サムネイル)：グルーピングされた結果を表示する */}
-            <div className='flex-1 flex flex-col p-[0] pb-[30vh]'>
+            <div className='flex-1 flex flex-col p-[0] pb-[15vh] md:pb-[30vh]'>
               <h3 className='text-[var(--color-gray)] font-bold'>Location</h3>
               {/* 上部のカテゴリボタン */}
-              <div className='m-[0_0_20px]'>
+              <div className='m-[0_0_40px]'>
                 <ul className='flex justify-start items-center flex-wrap gap-1'>
                   <ListButton $isActive={filter === null} onClick={() => setFilter(null)}>
                     全て
@@ -131,7 +137,7 @@ const Gallery = () => {
                 {Object.entries(grouped)
                   .sort((a, b) => b[0] - a[0])
                   .map(([year, items]) => (
-                    <section key={year}>
+                    <section className='mb-[4px]' key={year}>
                       <div className='flex'>
                         {/* 年 */}
                         <p className='mb-0 whitespace-nowrap'>{year}年</p>
@@ -175,20 +181,20 @@ const Gallery = () => {
               </div>
             </div>
           </div>
-        </div>
-      </Inner>
+        </Inner>
 
-      {/* ⬇︎スマホ用/モーダル表示エリア */}
-      {isModalOpen && selectedImage && (
-        <div className='md:hidden fixed inset-0 z-1000 flex items-center justify-center bg-black/75' onClick={() => setModalOpen(false)}>
-          <div className='relative max-w-[95%] w-full rounded-lg'>
-            <Image src={selectedImage.src} alt={selectedImage.name} width={selectedImage.width} height={selectedImage.height} className='w-full h-auto object-cover' />
-            {/* ⬇︎写真の名前 */}
-            <div className='mt-3 font-bold text-[1.2rem] text-center text-[var(--color-white)]'>{selectedImage.name}</div>
+        {/* ⬇︎⭐️スマホ用/モーダル表示エリア */}
+        {isModalOpen && selectedImage && (
+          <div className='md:hidden fixed inset-0 z-1000 flex items-center justify-center bg-black/75' onClick={() => setModalOpen(false)}>
+            <div className='relative max-w-[95%] w-full rounded-lg'>
+              <Image src={selectedImage.src} className='w-full h-auto object-cover' alt={selectedImage.name} width={selectedImage.width} height={selectedImage.height} />
+              {/* ⬇︎写真の名前 */}
+              <div className='title__ja text-[1.2rem] text-center text-[var(--color-white)] mt-2 font-bold'>{selectedImage.name}</div>
+            </div>
           </div>
-        </div>
-      )}
-    </Wrapper>
+        )}
+      </Wrapper>
+    </PageContainer>
   );
 };
 

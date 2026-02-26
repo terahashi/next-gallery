@@ -7,7 +7,7 @@ import Image from 'next/image'; //Next.jsでは基本的に <Image />コンポ�
 import Link from 'next/link'; //Linkコンポーネント
 
 //コンポーネント & Data
-import { Wrapper, Inner } from '../components/common/LayoutPrimitives';
+import { PageContainer, Wrapper, Inner } from '../components/common/LayoutPrimitives';
 import itemsData from '@/data/itemsData.js'; //画像データの配列
 
 export default function Home() {
@@ -23,30 +23,30 @@ export default function Home() {
   if (!randamImages) return null;
 
   return (
-    <Wrapper>
-      <Inner>
-        {/* ⬇︎  ダークモード時の確認用 */}
-        {/* <div className='bg-white dark:bg-black'> */}
-        <div className='flex min-h-screen justify-center items-center '>
-          <main className='flex min-h-screen justify-center items-center w-full max-w-3xl flex-col items-center gap-y-8 py-32 px-16  '>
-            <Link href={`/gallery?selected=${randamImages.id}`}>
-              <div className='text-center'>
-                {/* ⬇︎①「width={数字} height={数字}を指定した場合のImageコンポーネント」 */}
-                <div className='mb-3 w-full max-w-md '>
-                  <Image src={randamImages.src} className='w-auto h-auto object-cover' alt={randamImages.name} width={randamImages.width} height={randamImages.height} priority />
-                </div>
+    <PageContainer>
+      <Wrapper>
+        <Inner>
+          <div className='flex justify-center items-center'>
+            <main className='flex md:min-h-screen justify-start md:justify-center items-center w-full max-w-3xl flex-col pt-[150px] md:py-16 px-0 md:px-16'>
+              <Link href={`/gallery?selected=${randamImages.id}`}>
+                <div className='text-center'>
+                  {/* ⬇︎①「width={数字} height={数字}を指定した場合のImageコンポーネント」 */}
+                  <div className='mb-4 w-full max-w-md '>
+                    <Image src={randamImages.src} className='w-auto h-auto object-cover' alt={randamImages.name} width={randamImages.width} height={randamImages.height} priority />
+                  </div>
 
-                {/* ⬇︎②「fillを指定した場合のImageコンポーネント」 33vwは条件に当てはまらなかった場合に適用される。 */}
-                {/* <div className='mb-3 relative w-full aspect-[2/3]'>
+                  {/* ⬇︎②「fillを指定した場合のImageコンポーネント」 33vwは条件に当てはまらなかった場合に適用される。 */}
+                  {/* <div className='mb-3 relative w-full aspect-[2/3]'>
                   <Image fill src={randomImages} className='object-cover' alt='TopImage' sizes='(max-width: 768px) 80vw, (max-width: 1200px) 50vw, 33vw' priority />
                 </div> */}
 
-                <h1 className='text-[1.1rem]'>VISIT GALLERY PAGE</h1>
-              </div>
-            </Link>
-          </main>
-        </div>
-      </Inner>
-    </Wrapper>
+                  <h1 className='text-[1.1rem]'>VISIT GALLERY PAGE</h1>
+                </div>
+              </Link>
+            </main>
+          </div>
+        </Inner>
+      </Wrapper>
+    </PageContainer>
   );
 }
