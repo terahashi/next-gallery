@@ -27,11 +27,12 @@ export default function Home() {
       <Wrapper>
         <Inner>
           <div className='flex justify-center items-center'>
-            <main className='flex md:min-h-screen justify-start md:justify-center items-center w-full max-w-3xl flex-col pt-[150px] md:py-16 px-0 md:px-16'>
+            {/* max-w-lg max-width(512px) */}
+            <main className='max-w-lg flex justify-start items-center w-full flex-col mt-[100px] mb-[100px] md:mt-[120px] md:mb-[120px] py-0 px-0'>
               <Link href={`/gallery?selected=${randamImages.id}`}>
                 <div className='text-center'>
                   {/* ⬇︎①「width={数字} height={数字}を指定した場合のImageコンポーネント」 */}
-                  <div className='mb-4 w-full max-w-md '>
+                  <div className='max-w-lg mb-4 w-full'>
                     <Image src={randamImages.src} className='w-auto h-auto object-cover' alt={randamImages.name} width={randamImages.width} height={randamImages.height} priority />
                   </div>
 
