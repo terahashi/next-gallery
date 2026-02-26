@@ -63,6 +63,9 @@ const Gallery = () => {
   //⬇︎スマホ用 モーダル表示管理
   const [isModalOpen, setModalOpen] = useState(false);
 
+  //ローディングする
+  const [isLoading, setIsLoading] = useState(false);
+
   ////⬇︎grouped関数
   //・render関数を実行してフィルタリング+グルーピングを実行 -> 結果を取得する関数
   //・useMemo(値のメモ化)...重い計算処理を毎回実行しないようにするため。
@@ -79,11 +82,30 @@ const Gallery = () => {
       <Wrapper>
         <Inner>
           {/* Flex start */}
-          <div className='flex mt-[50px] md:mt-[100px] items-start justify-center gap-x-5'>
+          <div className='flex mt-[100px] md:mt-[100px] md:mb-[100px] items-start justify-center gap-x-5'>
             {/* ⬇︎左表示(画像表示エリア)：サムネイルでクリックされた画像を大きく表示する */}
             <div className='hidden flex-[2] md:flex justify-start items-start flex-col self-start md:m-[50px_80px] w-full max-w-[900px]'>
-              {selectedImage && <Image src={selectedImage.src} alt={selectedImage.name} width={selectedImage.width} height={selectedImage.height} className='w-full h-auto object-cover' priority />}
-
+              <div className='relative w-full'>
+                {/* ⬇ローディングの回転を表示 */}
+                {isLoading && (
+                  <div className='absolute inset-0 flex items-center justify-center bg-white/60 z-10'>
+                    <div className='w-[40px] h-[40px] border-4 border-gray-200 border-t-gray-800 rounded-full animate-spin' />
+                  </div>
+                )}
+                {/* ⬇選択された画像を表示 */}
+                {selectedImage && (
+                  <Image
+                    key={selectedImage.id}
+                    src={selectedImage.src}
+                    alt={selectedImage.name}
+                    width={selectedImage.width}
+                    height={selectedImage.height}
+                    className='w-full h-auto object-cover'
+                    priority
+                    onLoad={() => setIsLoading(false)}
+                  />
+                )}
+              </div>
               {/* (選択中画像に適応した)名前 を表示させる */}
               {selectedImage && <div className='title__ja md:text-[1.2rem] font-bold md:mt-[12px]'>{selectedImage.name}</div>}
 
@@ -100,7 +122,7 @@ const Gallery = () => {
             </div>
 
             {/* ⬇︎右表示(サムネイル)：グルーピングされた結果を表示する */}
-            <div className='flex-1 flex flex-col p-[0] pb-[15vh] md:pb-[30vh]'>
+            <div className='max-w-lg flex-1 flex flex-col p-[0] pb-[15vh] md:pb-[30vh]'>
               <h3 className='text-[var(--color-gray)] font-bold'>Location</h3>
               {/* 上部のカテゴリボタン */}
               <div className='m-[0_0_40px]'>
@@ -148,22 +170,30 @@ const Gallery = () => {
                       <div className='flex justify-start flex-nowrap'>
                         {items.map((item) => (
                           <div key={item.id}>
-                            {/* 名前を表示 */}
-                            {/* <div>
-                                <span>{item.name}</span>
-                              </div> */}
-
                             {/* (サムネイル)表示 */}
                             <button
                               type='button'
                               onClick={() => {
-                                setSelectedImage(item);
-                                setModalOpen(true);
+                                //⬇︎もしも「今左に表示している画像」と「今クリックしたサムネイル画像」が『同一の場合』は、
+                                if (selectedImage?.id === item.id) {
+                                  //モーダルだけ再表示する。
+                                  setModalOpen(true);
+                                  return;
+                                }
+                                //⬇︎それ以外の「今左に表示している画像」と「今クリックしたサムネイル画像」が『違う場合』は、
+                                setIsLoading(true); //別の画像をクリックした場合のみローディングの回転を開始。
+                                setSelectedImage(item); //画像が左側に表示される。
+                                setModalOpen(true); //モーダルを開く。
                               }}
                               className={clsx('cursor-pointer inline-block border-2', selectedImage?.id === item.id ? 'border-sky-400' : 'border-transparent')}
                             >
                               <Image src={item.thumbnail} className='object-cover' alt={item.name} width={item.thumbWidth} height={item.thumbHeight} priority />
                             </button>
+
+                            {/* 名前を表示 */}
+                            {/* <div>
+                                <span>{item.name}</span>
+                              </div> */}
 
                             {/* 横のカテゴリボタン 表示 */}
                             {/* <div>
