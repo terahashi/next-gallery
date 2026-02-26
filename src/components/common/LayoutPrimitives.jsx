@@ -3,13 +3,18 @@
 'use client'; //styled-componentsを使うために必要。
 import styled from 'styled-components'; //styled-components
 
-//Wrapper styled-components
+const PageContainer = styled.div`
+  padding-top: var(--header-height);
+  min-height: 100dvh; //「コンテンツが少ないときでも、フッターを画面の一番下に押し止めるため」にmin-heightを設定
+`;
+
+//Wrapper
 const Wrapper = styled.div`
   padding-left: clamp(16px, 4vw, 32px);
   padding-right: clamp(16px, 4vw, 32px);
 `;
 
-//Inner styled-components
+//Inner
 const Inner = styled.div`
   width: 100%;
   max-width: var(--layout-max-width);
@@ -18,4 +23,4 @@ const Inner = styled.div`
 `;
 
 //⬇︎名前付きexport
-export { Wrapper, Inner };
+export { PageContainer, Wrapper, Inner };

@@ -9,7 +9,7 @@ const YearSeparatorLineWrapper = styled.div`
 
 const Line = styled.div`
   width: 100%;
-  height: 2px;
+  height: 1.2px;
   background-color: #d9d9d9;
   border-radius: 2px;
 `;

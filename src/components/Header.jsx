@@ -103,7 +103,7 @@ const Header = () => {
         <HeaderInner>
           <div className='logo'>
             <Link href='/'>
-              <h1 className='mb-0 font-bold text-[1rem] md:text-[1.5rem]'>GALLERY</h1>
+              <h1 className='mb-0 font-bold text-[1.3rem] md:text-[1.5rem]'>GALLERY</h1>
             </Link>
           </div>
 
