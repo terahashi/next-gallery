@@ -82,32 +82,34 @@ const Gallery = () => {
       <Wrapper>
         <Inner>
           {/* Flex start */}
-          <div className='flex mt-[100px] md:mt-[100px] md:mb-[100px] items-start justify-center gap-x-5'>
+          <div className='flex mt-[100px] md:mt-[100px] md:mb-[100px] items-start justify-center'>
             {/* ⬇︎左表示(画像表示エリア)：サムネイルでクリックされた画像を大きく表示する */}
-            <div className='hidden flex-[2] md:flex justify-start items-start flex-col self-start md:m-[50px_80px] w-full max-w-[900px]'>
-              <div className='relative w-full'>
-                {/* ⬇ローディングの回転を表示 */}
-                {isLoading && (
-                  <div className='absolute inset-0 flex items-center justify-center bg-white/60 z-10'>
-                    <div className='w-[40px] h-[40px] border-4 border-gray-200 border-t-gray-800 rounded-full animate-spin' />
-                  </div>
-                )}
-                {/* ⬇選択された画像を表示 */}
-                {selectedImage && (
-                  <Image
-                    key={selectedImage.id}
-                    src={selectedImage.src}
-                    alt={selectedImage.name}
-                    width={selectedImage.width}
-                    height={selectedImage.height}
-                    className='w-full h-auto object-cover'
-                    priority
-                    onLoad={() => setIsLoading(false)}
-                  />
-                )}
+            <div className='hidden flex-[2] md:flex justify-start items-start flex-col self-start md:m-[30px] w-full max-w-[900px]'>
+              <div className='flex justify-center relative w-full '>
+                <div className='w-full'>
+                  {/* ⬇ローディングの回転を表示 */}
+                  {isLoading && (
+                    <div className='absolute inset-0 flex items-center justify-center bg-white/60 z-10'>
+                      <div className='w-[40px] h-[40px] border-4 border-gray-200 border-t-gray-800 rounded-full animate-spin' />
+                    </div>
+                  )}
+                  {/* ⬇選択された画像を表示 */}
+                  {selectedImage && (
+                    <Image
+                      key={selectedImage.id}
+                      src={selectedImage.src}
+                      alt={selectedImage.name}
+                      width={selectedImage.width}
+                      height={selectedImage.height}
+                      className='w-full h-auto object-cover'
+                      priority
+                      onLoad={() => setIsLoading(false)}
+                    />
+                  )}
+                </div>
               </div>
               {/* (選択中画像に適応した)名前 を表示させる */}
-              {selectedImage && <div className='title__ja md:text-[1.2rem] font-bold md:mt-[12px]'>{selectedImage.name}</div>}
+              {selectedImage && <div className='title__ja md:text-[1.2rem] font-bold md:mt-[24px]'>{selectedImage.name}</div>}
 
               {/* (選択中画像に適応した)カテゴリボタン を表示させる */}
               {selectedImage && (
@@ -122,7 +124,7 @@ const Gallery = () => {
             </div>
 
             {/* ⬇︎右表示(サムネイル)：グルーピングされた結果を表示する */}
-            <div className='max-w-lg flex-1 flex flex-col p-[0] pb-[15vh] md:pb-[30vh]'>
+            <div className='w-full md:w-[380px] md:flex-none flex flex-col p-[0] pb-[15vh] md:pb-[30vh]'>
               <h3 className='text-[var(--color-gray)] font-bold'>Location</h3>
               {/* 上部のカテゴリボタン */}
               <div className='m-[0_0_40px]'>
@@ -130,32 +132,32 @@ const Gallery = () => {
                   <ListButton $isActive={filter === null} onClick={() => setFilter(null)}>
                     全て
                   </ListButton>
-                  <ListButton $isActive={filter === 'vegetable'} onClick={() => setFilter('vegetable')}>
-                    イタリア
+                  <ListButton $isActive={filter === 'フランス'} onClick={() => setFilter('フランス')}>
+                    フランス
                   </ListButton>
-                  <ListButton $isActive={filter === 'fruit'} onClick={() => setFilter('fruit')}>
-                    ポルトガル
+                  <ListButton $isActive={filter === 'スイス'} onClick={() => setFilter('スイス')}>
+                    スイス
                   </ListButton>
-                  <ListButton $isActive={filter === 'fish'} onClick={() => setFilter('fish')}>
-                    スペイン
+                  <ListButton $isActive={filter === 'ポーランド'} onClick={() => setFilter('ポーランド')}>
+                    ポーランド
                   </ListButton>
-                  <ListButton $isActive={filter === 'fish'} onClick={() => setFilter('fish')}>
-                    スペイン
+                  <ListButton $isActive={filter === 'オランダ'} onClick={() => setFilter('オランダ')}>
+                    オランダ
                   </ListButton>{' '}
-                  <ListButton $isActive={filter === 'fish'} onClick={() => setFilter('fish')}>
-                    スペイン
+                  <ListButton $isActive={filter === 'イギリス'} onClick={() => setFilter('イギリス')}>
+                    イギリス
                   </ListButton>{' '}
-                  <ListButton $isActive={filter === 'fish'} onClick={() => setFilter('fish')}>
-                    スペイン
+                  <ListButton $isActive={filter === 'アメリカ'} onClick={() => setFilter('アメリカ')}>
+                    アメリカ
                   </ListButton>{' '}
-                  <ListButton $isActive={filter === 'fish'} onClick={() => setFilter('fish')}>
-                    スペイン
+                  <ListButton $isActive={filter === '台湾'} onClick={() => setFilter('台湾')}>
+                    台湾
                   </ListButton>
                 </ul>
               </div>
 
               {/* 下部のサムネイル */}
-              <div className='scroll-area overflow-y-scroll overflow-x-hidden max-h-[65vh] p-[0] pb-[30vh]'>
+              <div className='scroll-area md:overflow-y-scroll md:overflow-x-hidden max-h-[65vh] p-[0] pb-[30vh]'>
                 {Object.entries(grouped)
                   .sort((a, b) => b[0] - a[0])
                   .map(([year, items]) => (
@@ -167,12 +169,14 @@ const Gallery = () => {
                       </div>
 
                       {/* ⬇︎「サムネイル画像達を表示」する。つまりitemを表示(フィルタリング+グルーピングされたデータ) */}
-                      <div className='flex justify-start flex-nowrap'>
+                      {/* auto-rows-[90px] は、行の高さを90pxで固定 */}
+                      <div className='grid grid-cols-[repeat(4,80px)] gap-1 auto-rows-[80px] justify-start'>
                         {items.map((item) => (
-                          <div key={item.id}>
+                          <div key={item.id} className='w-[80px] h-[80px]'>
                             {/* (サムネイル)表示 */}
                             <button
                               type='button'
+                              className={clsx('w-[80px] h-[80px] rounded-[0.2em] cursor-pointer border-2', selectedImage?.id === item.id ? 'border-sky-400' : 'border-transparent')}
                               onClick={() => {
                                 //⬇︎もしも「今左に表示している画像」と「今クリックしたサムネイル画像」が『同一の場合』は、
                                 if (selectedImage?.id === item.id) {
@@ -185,9 +189,8 @@ const Gallery = () => {
                                 setSelectedImage(item); //画像が左側に表示される。
                                 setModalOpen(true); //モーダルを開く。
                               }}
-                              className={clsx('cursor-pointer inline-block border-2', selectedImage?.id === item.id ? 'border-sky-400' : 'border-transparent')}
                             >
-                              <Image src={item.thumbnail} className='object-cover' alt={item.name} width={item.thumbWidth} height={item.thumbHeight} priority />
+                              <Image src={item.thumbnail} className='w-full h-auto object-cover' alt={item.name} width={item.thumbWidth} height={item.thumbHeight} priority />
                             </button>
 
                             {/* 名前を表示 */}
