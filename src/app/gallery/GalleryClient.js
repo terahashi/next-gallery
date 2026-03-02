@@ -157,7 +157,7 @@ const Gallery = () => {
               </div>
 
               {/* 下部のサムネイル */}
-              <div className='scroll-area md:overflow-y-scroll md:overflow-x-hidden max-h-[100vh] md:max-h-[65vh] p-[0] pb-[30vh]'>
+              <div className='scroll-area md:overflow-y-scroll md:overflow-x-hidden max-h-[100vh] md:max-w-none p-[0] pb-[30vh]'>
                 {Object.entries(grouped)
                   .sort((a, b) => b[0] - a[0])
                   .map(([year, items]) => (
