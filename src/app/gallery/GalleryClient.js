@@ -56,7 +56,7 @@ const Gallery = () => {
 
   //⬇︎「選択中の画像」を管理するstate
   const searchParams = useSearchParams();
-  const selectedId = searchParams.get('selected');
+  const selectedId = searchParams.get('selected'); //selectedは自身が決めた「クエリパラメータのキー名」URLのクエリ(?selected=123)
   const initialImage = itemsData.find((item) => String(item.id) === selectedId) ?? itemsData[0];
   const [selectedImage, setSelectedImage] = useState(initialImage);
 
