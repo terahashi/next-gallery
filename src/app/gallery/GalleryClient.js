@@ -124,7 +124,7 @@ const Gallery = () => {
             </div>
 
             {/* ⬇︎右表示(サムネイル)：グルーピングされた結果を表示する */}
-            <div className='w-full md:w-[380px] md:flex-none flex flex-col p-[0] pb-[15vh] md:pb-[30vh]'>
+            <div className='w-full md:w-[380px] md:flex-none flex flex-col p-[0] pb-[100px] md:pb-[15vh] md:pb-[30vh]'>
               <h3 className='text-[var(--color-gray)] font-bold'>Location</h3>
               {/* 上部のカテゴリボタン */}
               <div className='m-[0_0_40px]'>
@@ -157,7 +157,7 @@ const Gallery = () => {
               </div>
 
               {/* 下部のサムネイル */}
-              <div className='scroll-area md:overflow-y-scroll md:overflow-x-hidden max-h-[100vh] md:max-w-none p-[0] pb-[30vh]'>
+              <div className='scroll-area md:overflow-y-scroll md:overflow-x-hidden max-h-unset md:max-h-[100vh] md:max-w-none p-[0] pb-[200px] md:pb-[30vh]'>
                 {Object.entries(grouped)
                   .sort((a, b) => b[0] - a[0])
                   .map(([year, items]) => (

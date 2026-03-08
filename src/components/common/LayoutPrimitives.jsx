@@ -2,10 +2,14 @@
 
 'use client'; //styled-componentsを使うために必要。
 import styled from 'styled-components'; //styled-components
+import breakpoints from '../../styles/breakpoints';
 
 const PageContainer = styled.div`
   padding-top: var(--header-height);
-  min-height: 100dvh; //「コンテンツが少ないときでも、フッターを画面の一番下に押し止めるため」にmin-heightを設定
+  min-height: unset; //「コンテンツが少ないときでも、フッターを画面の一番下に押し止めるため」にmin-heightを設定
+  @media screen and (min-width: ${breakpoints.tablet}) {
+    min-height: 100dvh;
+  }
 `;
 
 //Wrapper
