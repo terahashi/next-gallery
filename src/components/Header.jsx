@@ -3,6 +3,7 @@
 import Link from 'next/link';
 import styled from 'styled-components';
 import { Wrapper, Inner } from './common/LayoutPrimitives';
+import breakpoints from '../styles/breakpoints';
 
 //⭐️ダークモード「next-themes」
 import { useTheme } from 'next-themes';
@@ -23,10 +24,16 @@ const HeaderWrap = styled.header`
   top: 0;
   left: 0;
   width: 100%;
-  height: var(--header-height);
+  height: 70px;
   box-shadow: 0 3px 3px 0 rgba(0, 0, 0, 0.2);
   background-color: #fff;
   color: #000;
+
+  /* tablet以上 */
+  @media (min-width: ${breakpoints.tablet}) {
+    height: var(--header-height);
+  }
+
   //⬇︎ダークモード時
   html.dark & {
     background-color: #1c1c1c;
@@ -54,15 +61,15 @@ const HeaderWrap = styled.header`
     &.is-active {
       font-weight: bold;
     }
-    &.is-active::after {
+    /* &.is-active::after {
       content: '';
       position: absolute;
       left: 0;
       bottom: -2px;
       width: 100%;
       height: 2.5px;
-      /* background-color: #000; */
-    }
+      background-color: #000;
+    } */
   }
 `;
 //メモ:import { Inner }を上書きして使用できます。
@@ -70,7 +77,6 @@ const HeaderInner = styled(Inner)`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: var(--layout-padding);
 `;
 
 const Header = () => {
